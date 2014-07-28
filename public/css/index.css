@@ -36,19 +36,6 @@ content a:hover {
     background-color: salmon;
 }
 
-/*footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    margin: 30px 50px;
-    opacity: .3;
-}
-
-footer a {
-    color: inherit;
-    border-bottom: solid 1px #999;
-}*/
-
 @media only screen and (max-width: 480px) {
     h2, h3 {
         font-size:50px;
