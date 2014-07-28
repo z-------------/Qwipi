@@ -14,11 +14,11 @@ app.get("/", function (req, res) {
     res.sendfile(paf + "index.html");
 });
 
-app.get("/survey", function(req, res) {
+app.get("/survey", function (req, res) {
     if (Object.keys(req.query).length > 0) {
         var slug = Object.keys(req.query)[0];
-        
-        fs.exists(paf + "quizzes/" + slug + ".json", function(exists) {
+
+        fs.exists(paf + "quizzes/" + slug + ".json", function (exists) {
             if (exists) {
                 res.sendfile(paf + "quiz.html");
             } else {
@@ -30,24 +30,24 @@ app.get("/survey", function(req, res) {
     }
 });
 
-app.get("/create", function(req, res) {
+app.get("/create", function (req, res) {
     res.sendfile(paf + "newcreate.html");
 });
 
-app.get("/submit", function(req, res) {
+app.get("/submit", function (req, res) {
     var slug = decodeURIComponent(req.query.slug);
     var results = JSON.parse(decodeURIComponent(req.query.json));
     var title = decodeURIComponent(req.query.title);
-    
+
     var resultsFilePath = paf + "results/" + slug + ".json";
-    
-    fs.exists(resultsFilePath, function(exists) {
+
+    fs.exists(resultsFilePath, function (exists) {
         if (exists) {
-            fs.readFile(resultsFilePath, fsOptions, function(err, data){
+            fs.readFile(resultsFilePath, fsOptions, function (err, data) {
                 data = JSON.parse(data);
                 data.results.push(results);
-                
-                fs.writeFile(resultsFilePath, JSON.stringify(data), fsOptions, function(){
+
+                fs.writeFile(resultsFilePath, JSON.stringify(data), fsOptions, function () {
                     res.redirect("/results?" + slug);
                     console.log("wrote new response to '" + slug + "'");
                 });
@@ -57,21 +57,21 @@ app.get("/submit", function(req, res) {
                 "title": title,
                 "results": [results]
             }
-            
-            fs.writeFile(resultsFilePath, JSON.stringify(fileSetup), fsOptions, function(){
+
+            fs.writeFile(resultsFilePath, JSON.stringify(fileSetup), fsOptions, function () {
                 res.redirect("/results?" + slug);
-                    console.log("wrote first response to '" + slug + "'");
+                console.log("wrote first response to '" + slug + "'");
             });
         }
     });
 });
 
-app.get("/submitcreate", function(req, res) {
+app.get("/submitcreate", function (req, res) {
     var slug = decodeURIComponent(req.query.slug);
-    
-    fs.exists(paf + "quizzes/" + slug + ".json", function(exists) {
+
+    fs.exists(paf + "quizzes/" + slug + ".json", function (exists) {
         if (!exists) {
-            fs.writeFile(paf + "quizzes/" + slug + ".json", decodeURIComponent(req.query.json), fsOptions, function(err){
+            fs.writeFile(paf + "quizzes/" + slug + ".json", decodeURIComponent(req.query.json), fsOptions, function (err) {
                 if (err) {
                     res.redirect("/");
                 } else {
@@ -85,28 +85,28 @@ app.get("/submitcreate", function(req, res) {
     });
 });
 
-app.get("/results", function(req, res) {
+app.get("/results", function (req, res) {
     res.sendfile(paf + "results.html");
 });
 
-app.get("/tos", function(req, res) {
+app.get("/tos", function (req, res) {
     res.sendfile(paf + "tos.html");
 });
 
-app.get("/random", function(req, res) {
+app.get("/random", function (req, res) {
     fs.readdir(paf + "quizzes/", function (err, files) {
-        files = files.filter(function(val){
+        files = files.filter(function (val) {
             return val.substring(val.lastIndexOf("."), val.length) === ".json";
         });
-        
-        var chosenFile = files[Math.round(Math.random()*(files.length-1))];
+
+        var chosenFile = files[Math.round(Math.random() * (files.length - 1))];
         chosenFile = chosenFile.substring(0, chosenFile.lastIndexOf(".json"));
         res.redirect("survey?" + chosenFile);
     });
 });
 
 app.get(/^(.+)$/, function (req, res) {
-    fs.exists(paf + req.params[0], function(exists) {
+    fs.exists(paf + req.params[0], function (exists) {
         if (exists) {
             res.sendfile(paf + req.params[0]);
         } else {
@@ -115,9 +115,9 @@ app.get(/^(.+)$/, function (req, res) {
     });
 });
 
-io.on("connection", function(socket) {
-    socket.on("check slug", function(slug) {
-        fs.exists(paf + "quizzes/" + slug + ".json", function(exists) {
+io.on("connection", function (socket) {
+    socket.on("check slug", function (slug) {
+        fs.exists(paf + "quizzes/" + slug + ".json", function (exists) {
             if (exists) {
                 socket.emit("slug taken");
             } else {
@@ -127,6 +127,6 @@ io.on("connection", function(socket) {
     });
 });
 
-http.listen(3000, function(){
+http.listen(3000, function () {
     console.log("Qwipi running on *:3000");
 });
