@@ -1,0 +1,92 @@
+h2 {
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.qwip, .qwip * {
+    font-size: 17px;
+}
+
+input {
+    margin: 5px;
+}
+
+#info label {
+    margin-right: 10px;
+    display: inline-block;
+}
+
+#info {
+    margin: 10px 0;
+}
+
+#info, #info * {
+    font-size: 20px;
+}
+
+input[type=text] {
+    border: none;
+    border-radius: 0;
+    background: none;
+    background-color: rgba(0, 0, 0, .1);
+    padding: 5px;
+}
+
+input[readonly] {
+    background-color: transparent;
+    color: #aaa;
+}
+
+.qwipi.title {
+    width: 350px;
+    max-width: 100%;
+    padding: 10px;
+    margin: 10px;
+}
+
+#qwiplist {
+    margin-bottom: 50px;
+}
+
+.hoveronly {
+    opacity: 0;
+}
+
+.qwip:hover .hoveronly {
+    opacity: 1;
+}
+
+.qwip[data-type='number'] .clist, .qwip[data-type='text'] .clist {
+    display: none;
+}
+
+.qwip[data-type='text'] .manchoices, .qwip[data-type='number'] .manchoices {
+    visibility: hidden;
+}
+
+.clist {
+    margin-left: 50px;
+}
+
+#submit, #add {
+    display: block;
+    border: solid 2px salmon;
+    border-radius: 4px;
+    color: salmon;
+    margin-top: 30px;
+    padding: 10px;
+    font-size: 20px;
+    background: none;
+    transition-property: color, background;
+    transition-duration: .3s;
+    cursor: pointer;
+}
+
+#add {
+    padding: 5px;
+}
+
+#submit:hover ,#add:hover {
+    color: white;
+    background-color: salmon;
+}

@@ -1,0 +1,54 @@
+#quiz li {
+    margin-bottom: 20px;
+}
+
+#quiz h2 {
+    font-weight: 400;
+}
+
+#quiz label {
+    margin: 5px;
+    display: block;
+}
+
+#quiz input {
+    margin-right: 10px;
+    border-radius: 0;
+    border: none;
+    background: none;
+    background-color: rgba(0, 0, 0, .1);
+    font-size: 17px;
+}
+
+#submit {
+    display: block;
+    border: solid 2px salmon;
+    border-radius: 4px;
+    color: salmon;
+    margin-top: 30px;
+    padding: 10px;
+    font-size: 20px;
+    background: none;
+    transition-property: color, background;
+    transition-duration: .3s;
+    cursor: pointer;
+}
+
+#submit:hover {
+    color: white;
+    background-color: salmon;
+}
+
+#quiz input[type=text], #quiz input[type=number] {
+    padding: 5px;
+    min-width: 100px;
+}
+
+#quiz p {
+    margin: 0 0 10px 5px;
+    color: #999;
+}
+
+#quiz h2.title {
+    font-size: 30px;
+}

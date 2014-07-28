@@ -1,0 +1,105 @@
+@import url("//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic");
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+}
+
+:focus {
+    outline-color: salmon;
+}
+
+[readonly]:focus {
+	outline: none;
+}
+
+body {
+    color: #333;
+	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: salmon;
+}
+
+header {
+    font-size: 30px;
+    background-color: salmon;
+    color: white;
+    padding: 0 50px;
+	z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    
+    transition-duration: .3s;
+    transition-property: box-shadow, padding-bottom;
+}
+
+header h1 {
+    transition: font-size .3s;
+}
+
+header h1:after {
+    content: "\03b2"; /* beta symbol */
+    color: rgba(255, 255, 255, .7);
+    font-size: .3em;
+    font-weight: 300;
+}
+
+header a {
+    color: inherit;
+    font-family: inherit;
+	padding-bottom: 15px;
+	display: inline-block;
+}
+
+content {
+    padding: 30px 50px;
+    display: block;
+}
+
+header.float {
+	box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+}
+
+header.float h1 {
+    font-size: 30px;
+}
+
+header.float a {
+	padding-bottom: 8px;
+}
+
+header.float h1:after {
+    display: none;
+}
+
+::selection {
+    background-color: salmon;
+    color: white;
+}
+
+select, input[type="button"] {
+	border: solid 2px salmon;
+	border-radius: 4px;
+	color: salmon;
+	font-size: 1em;
+	background: white;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+@media only screen and (max-width: 480px) {
+    content {
+        padding: 30px;
+    }
+    
+    header {
+        padding-left: 30px;
+    }
+}

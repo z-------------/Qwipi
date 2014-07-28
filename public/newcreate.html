@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Create a survey - qwipi</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/newcreate.css">
+    </head>
+    <body>
+        <header>
+            <h1>qwipi</h1>
+        </header>
+        
+        <content>
+            <h2>Create a survey</h2>
+            
+            <form>
+                <div id="info">
+                    <label>
+                        Title <input type="text" placeholder="My Cool Survey" id="title" required autofocus>
+                    </label>
+                    <label>
+                        Nick <input type="text" placeholder="Me" id="nick" required>
+                    </label>
+                    <label>
+                        Slug <input type="text" placeholder="my-cool-survey" id="slug" readonly required>
+                    </label>
+                </div>
+            </form>
+            
+            <ol id="qwiplist"></ol>
+            
+            <div id="managequestions">
+                <input type="button" value="+ Add question" id="add">
+            </div>
+            
+            <input type="button" value="Submit" id="submit">
+        </content>
+        
+        <script src="js/common.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/newcreate.js"></script>
+    </body>
+</html>

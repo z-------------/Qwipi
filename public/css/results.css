@@ -1,0 +1,42 @@
+h2 {
+    font-weight: 400;
+    margin: 10px 0;
+}
+
+th {
+    background-color: salmon;
+    color: white;
+    font-weight: 400;
+}
+
+td, th {
+    padding: 10px;
+}
+
+tr:nth-child(odd) {
+    background-color: #E5E5E5;
+}
+
+ul, ol {
+	list-style: none;
+}
+
+.doughnut-legend span {
+	display: inline-block;
+	height: 15px;
+	width: 15px;
+	margin-right: 5px;
+}
+
+#charts {
+	margin: 20px;
+}
+
+#charts > div {
+	margin: 20px;
+	float: left;
+}
+
+#charts canvas {
+	margin: 15px 0;
+}
