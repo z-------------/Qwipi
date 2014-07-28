@@ -25,6 +25,10 @@ Array.prototype.occurences = function() {
 	return counts;
 };
 
+Array.prototype.flatten = function() {
+	return [].concat.apply([],this);
+};
+
 Chart.defaults.global.animation = false;
 Chart.defaults.global.tooltipFontFamily = "'Source Sans Pro', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
 Chart.defaults.global.tooltipFillColor  = "#e5e5e5";
@@ -81,64 +85,65 @@ function showResults(r) {
     h2.innerHTML = "Results - <a href='survey?" + slug + "'>" + title.encodeHTML() + "</a>";
     $("content").insertBefore(h2, $("table"));
 	
-	showCharts();
+	showCharts(results);
     
     document.title = "Results - " + title + " - qwipi";
 }
 
-function showCharts() {
+function showCharts(results) {
+	var chartQs = [];
+	var chartsDiv = document.querySelector("#charts");
 	var palette = ["#fa8072", "#fa72a8", "#fac472", "#fa72ec", "#72fa80", "#72ecfa", "#72a8fa", "#72fac4"];
 	
-	var graphQs = document.querySelectorAll("[data-type='radio'], [data-type='checkbox']");
-	var chartsDiv = document.querySelector("#charts");
-
-	for (i=0; i<graphQs.length; i++) {
-		var chartData = [];
-		var index = Number(graphQs[i].dataset.index);
-		var questionText = graphQs[i].textContent;
-		var answers = [];
-		var tds = document.querySelectorAll("td:nth-child(" + (index+1) + ")");
-		
-		for (j=0; j<tds.length; j++) {
-			if (graphQs[i].dataset.type === "radio") {
-				answers.push(tds[j].textContent);
-			} else if (graphQs[i].dataset.type === "checkbox") {
-				var spans = tds[j].querySelectorAll("span");
-				for (k=0; k<spans.length; k++) {
-					answers.push(spans[k].textContent);
-				}
+	for (i=0; i<results[0].length; i++) {
+		chartQs.push({
+			title: results[0][i].question,
+			type: results[0][i].type,
+			answers: []
+		});
+	}
+	
+	for (i=0; i<results.length; i++) {
+		for (j=0; j<results[i].length; j++) {
+			chartQs[j].answers.push(results[i][j].answer);
+		}
+	}
+	
+	for (i=0; i<chartQs.length; i++) {
+		if (chartQs[i].type === "radio" || chartQs[i].type === "checkbox") {
+			var flatAnswers = chartQs[i].answers.flatten();
+			
+			var uniques = flatAnswers.uniqueElems();
+			var counts = flatAnswers.occurences();
+			
+			var chartData = [];
+			
+			for (j=0; j<uniques.length; j++) {
+				chartData.push({
+					label: uniques[j],
+					value: counts[uniques[j]],
+					color: palette[j] || "rgb(" + Math.round(Math.random()*255) + "," + Math.round(Math.random()*255) + "," + Math.round(Math.random()*255) + ")"
+				});
 			}
+			
+			var chartContainer = document.createElement("div");
+			chartContainer.innerHTML = "<h3>" + chartQs[i].title + "</h3>";
+
+			var canvas = document.createElement("canvas");
+			canvas.width = 250;
+			canvas.height = 250;
+			var ctx = canvas.getContext("2d");
+
+			chartContainer.appendChild(canvas);
+
+			var chart = new Chart(ctx).Doughnut(chartData);
+
+			var legend = document.createElement("div");
+			legend.innerHTML = chart.generateLegend();
+
+			chartContainer.appendChild(legend);
+
+			chartsDiv.appendChild(chartContainer);
 		}
-		
-		var uniques = answers.uniqueElems();
-		var counts = answers.occurences();
-		
-		for (j=0; j<uniques.length; j++) {
-			var color = palette[j] || "rgb(" + Math.round(Math.random()*255) + "," + Math.round(Math.random()*255) + "," + Math.round(Math.random()*255) + ")";
-			chartData.push({
-				label: uniques[j],
-				value: counts[uniques[j]],
-				color: color
-			});
-		}
-		
-		var chartContainer = document.createElement("div");
-		chartContainer.innerHTML = "<h3>" + questionText + "</h3>";
-		
-		var canvas = document.createElement("canvas");
-		canvas.width = 250;
-		canvas.height = 250;
-		var ctx = canvas.getContext("2d");
-		
-		chartContainer.appendChild(canvas);
-		
-		var chart = new Chart(ctx).Doughnut(chartData);
-		
-		var legend = document.createElement("div");
-		legend.innerHTML = chart.generateLegend();
-		
-		chartContainer.appendChild(legend);
-		
-		chartsDiv.appendChild(chartContainer);
 	}
 }
