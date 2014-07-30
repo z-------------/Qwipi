@@ -1,9 +1,31 @@
 {
-    "name": "qwipi",
-    "version": "0.0.1",
-    "description": "Create and share anonymous surveys, for free",
-    "dependencies": {
-        "express": "^4.4.1",
-        "socket.io": "~1.0.4"
-    }
+  "name": "qwipi",
+  "version": "0.0.3",
+  "description": "Create and share anonymous surveys, for free",
+  "dependencies": {
+    "express": "^4.4.1",
+    "socket.io": "~1.0.4"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/z-------------/Qwipi.git"
+  },
+  "keywords": [
+    "survey"
+  ],
+  "author": "Zack Guard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/z-------------/Qwipi/issues"
+  },
+  "homepage": "https://github.com/z-------------/Qwipi",
+  "subdomain": "qwipi",
+  "engines": {
+    "node": "0.10.x"
+  }
 }
