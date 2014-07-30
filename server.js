@@ -18,6 +18,8 @@ if (!fs.existsSync(paf + "results")) {
     fs.mkdirSync(paf + "results");
 }
 
+app.set("view engine", "ejs");
+
 app.get("/", function (req, res) {
     res.sendfile(paf + "index.html");
 });
@@ -30,7 +32,7 @@ app.get("/survey", function (req, res) {
             if (exists) {
                 res.sendfile(paf + "quiz.html");
             } else {
-                res.sendfile(paf + "404.html");
+                res.render("error", { error: "404" });
             }
         });
     } else {
@@ -81,14 +83,14 @@ app.get("/submitcreate", function (req, res) {
         if (!exists) {
             fs.writeFile(paf + "quizzes/" + slug + ".json", decodeURIComponent(req.query.json), fsOptions, function (err) {
                 if (err) {
-                    res.redirect("/");
+                    res.render("error", { error: "500" });
                 } else {
                     console.log("created new survey: '" + slug + "'");
                     res.redirect("survey?" + slug);
                 }
             });
         } else {
-            res.redirect("/");
+            res.render("error", { error: "500" });
         }
     });
 });
@@ -103,13 +105,17 @@ app.get("/tos", function (req, res) {
 
 app.get("/random", function (req, res) {
     fs.readdir(paf + "quizzes/", function (err, files) {
-        files = files.filter(function (val) {
-            return val.substring(val.lastIndexOf("."), val.length) === ".json";
-        });
+        try {
+            files = files.filter(function (val) {
+                return val.substring(val.lastIndexOf("."), val.length) === ".json";
+            });
 
-        var chosenFile = files[Math.round(Math.random() * (files.length - 1))];
-        chosenFile = chosenFile.substring(0, chosenFile.lastIndexOf(".json"));
-        res.redirect("survey?" + chosenFile);
+            var chosenFile = files[Math.round(Math.random() * (files.length - 1))];
+            chosenFile = chosenFile.substring(0, chosenFile.lastIndexOf(".json"));
+            res.redirect("survey?" + chosenFile);
+        } catch (e) {
+            res.render("error", { error: "500" });
+        }
     });
 });
 
@@ -118,7 +124,7 @@ app.get(/^(.+)$/, function (req, res) {
         if (exists) {
             res.sendfile(paf + req.params[0]);
         } else {
-            res.sendfile(paf + "404.html");
+            res.render("error", { error: "404" });
         }
     });
 });
