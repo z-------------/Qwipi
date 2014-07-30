@@ -4,11 +4,19 @@ var fs = require("fs");
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
 
-var paf = __dirname + "/public/";
+var paf = process.cwd() + "/public/";
 
 var fsOptions = {
     encoding: "utf8"
 };
+
+if (!fs.existsSync(paf + "quizzes")) {
+    fs.mkdirSync(paf + "quizzes");
+}
+
+if (!fs.existsSync(paf + "results")) {
+    fs.mkdirSync(paf + "results");
+}
 
 app.get("/", function (req, res) {
     res.sendfile(paf + "index.html");
