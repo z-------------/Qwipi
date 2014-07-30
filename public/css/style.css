@@ -8,11 +8,7 @@
 }
 
 :focus {
-    outline-color: salmon;
-}
-
-[readonly]:focus {
-	outline: none;
+    outline: none;
 }
 
 body {
