@@ -1,6 +1,6 @@
 {
   "name": "qwipi",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Create and share anonymous surveys, for free",
   "dependencies": {
     "ejs": "^1.0.0",
