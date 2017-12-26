@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "description": "Create and share anonymous surveys, for free",
   "dependencies": {
-    "ejs": "^1.0.0",
+    "ejs": "^2.5.7",
     "express": "^4.4.1",
     "socket.io": "~1.0.4"
   },
