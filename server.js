@@ -21,7 +21,7 @@ if (!fs.existsSync(paf + "results")) {
 app.set("view engine", "ejs");
 
 app.get("/", function (req, res) {
-    res.sendfile(paf + "index.html");
+    res.sendFile(paf + "index.html");
 });
 
 app.get("/survey", function (req, res) {
@@ -30,7 +30,7 @@ app.get("/survey", function (req, res) {
 
         fs.exists(paf + "quizzes/" + slug + ".json", function (exists) {
             if (exists) {
-                res.sendfile(paf + "quiz.html");
+                res.sendFile(paf + "quiz.html");
             } else {
                 res.render("error", { error: "404" });
             }
@@ -41,7 +41,7 @@ app.get("/survey", function (req, res) {
 });
 
 app.get("/create", function (req, res) {
-    res.sendfile(paf + "newcreate.html");
+    res.sendFile(paf + "newcreate.html");
 });
 
 app.get("/submit", function (req, res) {
@@ -96,11 +96,11 @@ app.get("/submitcreate", function (req, res) {
 });
 
 app.get("/results", function (req, res) {
-    res.sendfile(paf + "results.html");
+    res.sendFile(paf + "results.html");
 });
 
 app.get("/tos", function (req, res) {
-    res.sendfile(paf + "tos.html");
+    res.sendFile(paf + "tos.html");
 });
 
 app.get("/random", function (req, res) {
@@ -122,7 +122,7 @@ app.get("/random", function (req, res) {
 app.get(/^(.+)$/, function (req, res) {
     fs.exists(paf + req.params[0], function (exists) {
         if (exists) {
-            res.sendfile(paf + req.params[0]);
+            res.sendFile(paf + req.params[0]);
         } else {
             res.render("error", { error: "404" });
         }
